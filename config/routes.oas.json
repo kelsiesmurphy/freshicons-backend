@@ -1,0 +1,47 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "My Zuplo API"
+  },
+  "paths": {
+    "/api/assets/search": {
+      "get": {
+        "summary": "Search Assets",
+        "x-zuplo-route": {
+          "handler": {
+            "export": "default",
+            "module": "$import(./modules/assets-search)",
+            "options": {}
+          },
+          "corsPolicy": "anything-goes"
+        },
+        "operationId": "bee0aea4-2e17-49f2-9b67-07c4a71a993b"
+      }
+    },
+    "/api/assets/{id}/download-url": {
+      "get": {
+        "summary": "Get Asset Download URL",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "x-zuplo-route": {
+          "handler": {
+            "export": "default",
+            "module": "$import(./modules/asset-download)",
+            "options": {}
+          },
+          "corsPolicy": "anything-goes"
+        },
+        "operationId": "ee87597f-3c3f-48d7-869f-0a1e1d1be8c0"
+      }
+    }
+  }
+}
