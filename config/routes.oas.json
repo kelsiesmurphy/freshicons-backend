@@ -38,7 +38,7 @@
             "module": "$import(./modules/asset-download)",
             "options": {}
           },
-          "corsPolicy": "anything-goes"
+          "corsPolicy": "none"
         },
         "operationId": "ee87597f-3c3f-48d7-869f-0a1e1d1be8c0"
       }
@@ -50,7 +50,7 @@
       "post": {
         "summary": "Insert newsletter",
         "x-zuplo-route": {
-          "corsPolicy": "anything-goes",
+          "corsPolicy": "none",
           "handler": {
             "export": "default",
             "module": "$import(./modules/newsletter-insert)",
