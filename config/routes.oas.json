@@ -14,7 +14,7 @@
             "module": "$import(./modules/assets-search)",
             "options": {}
           },
-          "corsPolicy": "anything-goes"
+          "corsPolicy": "none"
         },
         "operationId": "bee0aea4-2e17-49f2-9b67-07c4a71a993b"
       }
