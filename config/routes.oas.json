@@ -42,6 +42,26 @@
         },
         "operationId": "ee87597f-3c3f-48d7-869f-0a1e1d1be8c0"
       }
+    },
+    "/api/newsletter": {
+      "x-zuplo-path": {
+        "pathMode": "open-api"
+      },
+      "post": {
+        "summary": "Insert newsletter",
+        "x-zuplo-route": {
+          "corsPolicy": "anything-goes",
+          "handler": {
+            "export": "default",
+            "module": "$import(./modules/newsletter-insert)",
+            "options": {}
+          },
+          "policies": {
+            "inbound": []
+          }
+        },
+        "operationId": "699f99cb-c8c7-424a-87f6-8129ca5478e1"
+      }
     }
   }
 }
