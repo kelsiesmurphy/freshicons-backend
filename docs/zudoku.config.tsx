@@ -7,17 +7,25 @@ import type { ZudokuConfig } from "zudoku";
  */
 const config: ZudokuConfig = {
   site: {
-    title: "My Developer Portal",
+    banner: {
+      message: "Welcome to our beta documentation!",
+      color: "note", // "note" | "tip" | "info" | "caution" | "danger" or custom
+      dismissible: true
+    },
+    title: "FreshIcons Developer Portal",
     logo: {
       src: {
-        light: "https://cdn.zuplo.com/assets/my-dev-portal-light.svg",
-        dark: "https://cdn.zuplo.com/assets/my-dev-portal-dark.svg",
+        light: "https://lckqyplcfzrpgormzxrz.supabase.co/storage/v1/object/public/general//wordmark-text-version.svg",
+        dark: "https://lckqyplcfzrpgormzxrz.supabase.co/storage/v1/object/public/general//wordmark-text-version-dark.svg",
       },
+      alt: "FreshIcons Logo",
+      href: "www.freshicons.co",
+      width: "200px"
     },
   },
   metadata: {
-    title: "Developer Portal",
-    description: "Developer Portal",
+    title: "FreshIcons Developer Portal",
+    description: "FreshIcons Developer Portal",
   },
   navigation: [
     {
