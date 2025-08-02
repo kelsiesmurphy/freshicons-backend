@@ -7,7 +7,7 @@ export default async function (req: ZuploRequest, ctx: ZuploContext) {
     const auth = req.headers.get("Authorization");
     const { userId } = await verifyClerkJWT(auth);
 
-    const assetId = ctx.params.id;
+    const assetId = ctx.requestId;
 
     const { data: purchase } = await supabase
       .from("purchases")
@@ -16,7 +16,10 @@ export default async function (req: ZuploRequest, ctx: ZuploContext) {
       .eq("asset_id", assetId)
       .maybeSingle();
 
-    if (!purchase) return new Response(JSON.stringify({ error: "Not purchased" }), { status: 403 });
+    if (!purchase)
+      return new Response(JSON.stringify({ error: "Not purchased" }), {
+        status: 403,
+      });
 
     const { data: asset } = await supabase
       .from("assets")
@@ -24,10 +27,15 @@ export default async function (req: ZuploRequest, ctx: ZuploContext) {
       .eq("id", assetId)
       .maybeSingle();
 
-    if (!asset) return new Response(JSON.stringify({ error: "Asset not found" }), { status: 404 });
+    if (!asset)
+      return new Response(JSON.stringify({ error: "Asset not found" }), {
+        status: 404,
+      });
 
     return { url: asset.file_url };
   } catch (e) {
-    return new Response(JSON.stringify({ error: (e as Error).message }), { status: 401 });
+    return new Response(JSON.stringify({ error: (e as Error).message }), {
+      status: 401,
+    });
   }
 }

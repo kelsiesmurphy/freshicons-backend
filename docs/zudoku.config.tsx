@@ -9,18 +9,19 @@ const config: ZudokuConfig = {
   site: {
     banner: {
       message: "Welcome to our beta documentation!",
-      color: "note", // "note" | "tip" | "info" | "caution" | "danger" or custom
-      dismissible: true
+      color: "#242626",
+      dismissible: true,
     },
     title: "FreshIcons Developer Portal",
     logo: {
       src: {
-        light: "https://lckqyplcfzrpgormzxrz.supabase.co/storage/v1/object/public/general//wordmark-text-version.svg",
+        light:
+          "https://lckqyplcfzrpgormzxrz.supabase.co/storage/v1/object/public/general//wordmark-text-version.svg",
         dark: "https://lckqyplcfzrpgormzxrz.supabase.co/storage/v1/object/public/general//wordmark-text-version-dark.svg",
       },
       alt: "FreshIcons Logo",
       href: "www.freshicons.co",
-      width: "200px"
+      width: "200px",
     },
   },
   metadata: {

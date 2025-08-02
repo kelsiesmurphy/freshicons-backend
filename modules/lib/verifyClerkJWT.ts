@@ -1,7 +1,7 @@
 import { jwtVerify } from "jose";
 import { environment } from "@zuplo/runtime";
 
-export async function verifyClerkJWT(authHeader?: string) {
+export async function verifyClerkJWT(authHeader: string | null) {
   if (!authHeader?.startsWith("Bearer ")) {
     throw new Error("Missing or malformed Authorization header");
   }

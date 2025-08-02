@@ -8,7 +8,7 @@ export default async function (req: ZuploRequest) {
     });
   }
 
-  let body: any;
+  let body: { email?: string };
   try {
     body = await req.json();
   } catch (err) {
