@@ -83,6 +83,48 @@
         },
         "operationId": "45b7ec00-4f47-4266-b720-8c9ec1bd437c"
       }
+    },
+    "/api/stripe/webhook": {
+      "x-zuplo-path": {
+        "pathMode": "open-api"
+      },
+      "post": {
+        "summary": "Stripe Webhook",
+        "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "export": "default",
+            "module": "$import(./modules/stripe-post-purchase-webhook)",
+            "options": {}
+          },
+          "policies": {
+            "inbound": []
+          }
+        },
+        "operationId": "ad6e1c4b-9668-407d-b0fb-0f7aa6646a40"
+      }
+    },
+    "/api/create-checkout-session": {
+      "x-zuplo-path": {
+        "pathMode": "open-api"
+      },
+      "post": {
+        "summary": "Create Stripe Checkout Session",
+        "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "export": "default",
+            "module": "$import(./modules/create-checkout-session)",
+            "options": {}
+          },
+          "policies": {
+            "inbound": []
+          }
+        },
+        "operationId": "b862de06-fad6-415a-9a99-72a80cb3abb4"
+      }
     }
   }
 }

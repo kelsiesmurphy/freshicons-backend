@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.53.0",
+    "stripe": "^18.4.0",
     "zuplo": "^6"
   },
   "devDependencies": {
