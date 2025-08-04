@@ -62,6 +62,27 @@
         },
         "operationId": "699f99cb-c8c7-424a-87f6-8129ca5478e1"
       }
+    },
+    "/api/assets/{slug}": {
+      "x-zuplo-path": {
+        "pathMode": "open-api"
+      },
+      "get": {
+        "summary": "Get Asset by Slug",
+        "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
+        "x-zuplo-route": {
+          "corsPolicy": "none",
+          "handler": {
+            "export": "default",
+            "module": "$import(./modules/asset-by-slug)",
+            "options": {}
+          },
+          "policies": {
+            "inbound": []
+          }
+        },
+        "operationId": "45b7ec00-4f47-4266-b720-8c9ec1bd437c"
+      }
     }
   }
 }
