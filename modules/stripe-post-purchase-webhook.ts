@@ -1,12 +1,12 @@
 import Stripe from "stripe";
-import { ZuploRequest } from "@zuplo/runtime";
+import { environment, ZuploRequest } from "@zuplo/runtime";
 import { supabase } from "./lib/supabase";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(environment.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-07-30.basil",
 });
 
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+const endpointSecret = environment.STRIPE_WEBHOOK_SECRET!;
 
 export default async function (req: ZuploRequest, res) {
   const sig = req.headers.get("stripe-signature");

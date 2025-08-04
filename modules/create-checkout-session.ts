@@ -2,8 +2,9 @@ import Stripe from "stripe";
 import { ZuploRequest } from "@zuplo/runtime";
 import { supabase } from "./lib/supabase";
 import { verifyClerkJWT } from "./lib/verifyClerkJWT";
+import { environment } from "@zuplo/runtime";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(environment.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-07-30.basil",
 });
 
@@ -11,7 +12,7 @@ export default async function (req: ZuploRequest, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
-  if (!process.env.STRIPE_SECRET_KEY) {
+  if (!environment.STRIPE_SECRET_KEY) {
     return res.status(500).json({ error: "Stripe secret key not configured" });
   }
   const body = await req.json();
@@ -63,8 +64,8 @@ export default async function (req: ZuploRequest, res) {
       asset_id: assetId,
       asset_slug: assetSlug,
     },
-    success_url: `${process.env.SITE_URL}/icons/${assetSlug}?success=1`,
-    cancel_url: `${process.env.SITE_URL}/icons/${assetSlug}?cancel=1`,
+    success_url: `${environment.SITE_URL}/icons/${assetSlug}?success=1`,
+    cancel_url: `${environment.SITE_URL}/icons/${assetSlug}?cancel=1`,
   });
 
   return res.status(200).json({ url: session.url });
