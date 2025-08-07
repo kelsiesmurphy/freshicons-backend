@@ -3,9 +3,20 @@
   "corsPolicies": [
     {
       "name": "custom-cors",
-      "allowedOrigins": ["http://localhost:3000", "https://freshicons.co"],
-      "allowedHeaders": ["Content-Type", "Authorization", "Origin"],
-      "allowedMethods": ["GET", "POST", "OPTIONS"],
+      "allowedOrigins": [
+        "http://localhost:3000",
+        "https://freshicons.co"
+      ],
+      "allowedHeaders": [
+        "Content-Type",
+        "Authorization",
+        "Origin"
+      ],
+      "allowedMethods": [
+        "GET",
+        "POST",
+        "OPTIONS"
+      ],
       "exposeHeaders": [],
       "maxAge": 600,
       "allowCredentials": false

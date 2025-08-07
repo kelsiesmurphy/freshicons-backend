@@ -1,72 +1,77 @@
 import Stripe from "stripe";
-import { ZuploRequest } from "@zuplo/runtime";
 import { supabase } from "./lib/supabase";
-import { verifyClerkJWT } from "./lib/verifyClerkJWT";
 import { environment } from "@zuplo/runtime";
 
 const stripe = new Stripe(environment.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-07-30.basil",
 });
 
-export default async function (req: ZuploRequest, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-  if (!environment.STRIPE_SECRET_KEY) {
-    return res.status(500).json({ error: "Stripe secret key not configured" });
-  }
-  const body = await req.json();
-  const { assetId, assetSlug, assetName } = body;
-
-  const auth = req.headers.get("Authorization");
-  const { userId } = await verifyClerkJWT(auth);
-
-  if (!userId) return res.status(401).json({ error: "Not authenticated" });
-
-  // Get or create Stripe customer
-  const { data: customerRecord } = await supabase
-    .from("customers")
-    .select("stripe_customer_id")
-    .eq("user_id", userId)
+async function getAssetById(id: string) {
+  const { data, error } = await supabase
+    .from("assets")
+    .select(
+      "id, type, name, description, slug, price_pence, currency, preview_url"
+    )
+    .eq("id", id)
     .single();
 
-  let stripeCustomerId = customerRecord?.stripe_customer_id;
-  if (!stripeCustomerId) {
-    const customer = await stripe.customers.create({
-      metadata: { user_id: userId },
-    });
+  if (error) throw new Error(error.message);
+  return data;
+}
 
-    await supabase.from("customers").insert({
-      user_id: userId,
-      stripe_customer_id: customer.id,
-    });
+export default async function handler(request: Request) {
+  try {
+    const origin = request.headers.get("origin") || environment.SITE_URL;
+    if (!origin) {
+      throw new Error("Missing origin header");
+    }
 
-    stripeCustomerId = customer.id;
-  }
+    const { assetID } = await request.json();
+    if (!assetID) {
+      return new Response(
+        JSON.stringify({ error: "Missing assetID in request body" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
 
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    customer: stripeCustomerId,
-    line_items: [
-      {
-        price_data: {
-          currency: "gbp",
-          product_data: {
-            name: `Icon: ${assetName}`,
+    const icon = await getAssetById(assetID);
+    if (!icon) {
+      return new Response(JSON.stringify({ error: "Icon not found" }), {
+        status: 404,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      line_items: [
+        {
+          quantity: 1,
+          price_data: {
+            currency: icon.currency,
+            product_data: {
+              name: icon.name,
+              description: icon.description,
+              images: [icon.preview_url],
+            },
+            unit_amount: icon.price_pence,
           },
-          unit_amount: 300,
         },
-        quantity: 1,
-      },
-    ],
-    metadata: {
-      user_id: userId,
-      asset_id: assetId,
-      asset_slug: assetSlug,
-    },
-    success_url: `${environment.SITE_URL}/icons/${assetSlug}?success=1`,
-    cancel_url: `${environment.SITE_URL}/icons/${assetSlug}?cancel=1`,
-  });
+      ],
+      mode: "payment",
+      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/?canceled=true`,
+      metadata: { assetID: icon.id },
+    });
 
-  return res.status(200).json({ url: session.url });
+    return new Response(JSON.stringify({ url: session.url }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (err: any) {
+    console.error("Checkout error:", err);
+    return new Response(
+      JSON.stringify({ error: err.message || "Internal server error" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
+  }
 }
