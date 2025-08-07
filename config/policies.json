@@ -1,5 +1,17 @@
 {
-  "policies": [],
+  "policies": [
+    {
+      "name": "my-stripe-webhook-verification-inbound-policy",
+      "policyType": "stripe-webhook-verification-inbound",
+      "handler": {
+        "export": "StripeWebhookVerificationInboundPolicy",
+        "module": "$import(@zuplo/runtime)",
+        "options": {
+          "tolerance": 300
+        }
+      }
+    }
+  ],
   "corsPolicies": [
     {
       "name": "custom-cors",

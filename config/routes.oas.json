@@ -92,7 +92,7 @@
         "summary": "Create Stripe Checkout Session",
         "description": "Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do `eiusmod tempor` incididunt ut labore et dolore magna aliqua.",
         "x-zuplo-route": {
-          "corsPolicy": "none",
+          "corsPolicy": "custom-cors",
           "handler": {
             "export": "default",
             "module": "$import(./modules/create-checkout-session)",
