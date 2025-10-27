@@ -2,8 +2,6 @@
 
 **FreshIcons Backend** — a TypeScript-powered API built with **Zuplo**, serving as the backend gateway and developer portal for [FreshIcons.co](https://freshicons.co).
 
-![FreshIcons Backend](./public/freshicons-backend.png)
-
 ---
 
 ## Overview
